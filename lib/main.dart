@@ -9,11 +9,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: Colors.black,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Newscreen(search: 'Entretenimento Brasil'),//Passando o parametro da tela, que sera o search.
+      home: Newscreen(),//Passando o parametro da tela, que sera o search.
     );
   }
 }

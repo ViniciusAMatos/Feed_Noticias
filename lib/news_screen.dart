@@ -4,32 +4,31 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class Newscreen extends StatefulWidget {
-  final String search; //Variavel para ser usada na procura no Json.
+  // final String search; //Variavel para ser usada na procura no Json.
 
-  Newscreen({this.search}); // construtor da variavel.
+  //Newscreen({this.search}); // construtor da variavel.
 
   @override
   _NewscreenState createState() => _NewscreenState();
 }
 
 class _NewscreenState extends State<Newscreen> {
-  String get search => widget.search;
+  //String get search => widget.search;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    _getData().then((value) => {});//Iniciar a API.
+    _getData().then((value) => {}); //Iniciar a API.
   }
 
   Future<Map> _getData() async {
     // Funcao criada para pegarmos os dados da API.
     http.Response response;
     response = await http.get(
-        'http://newsapi.org/v2/everything?language=pt&q=$search&apiKey=33e4cbb785c647cdb1f7724704be4d86');
+        'http://newsapi.org/v2/top-headlines?country=br&category=health&apiKey=33e4cbb785c647cdb1f7724704be4d86');
     return json
-        .decode(response.body); // Retornando os dados para a variavel response. 
+        .decode(response.body); // Retornando os dados para a variavel response.
   }
-
 
   Widget _tela(context, snapshot) {
     return ListView.builder(
@@ -37,17 +36,28 @@ class _NewscreenState extends State<Newscreen> {
             snapshot.data['articles'].length, //Pegar o tamanho da aba artigos.
         itemBuilder: (context, index) {
           return GestureDetector(
+              child: Card(
             child: Container(
               height: 100.0,
               width: 400.0,
               child: Row(
                 children: <Widget>[
-                  Container(child: Image.network(snapshot.data['articles'][index]['urlToImage']), width: 100.0,), //Pegar imagem da noticia da API.
-                  Container( width: 200.0,
+                  Container(
+                    child: Image.network(_verification(snapshot, index),
+                        fit: BoxFit.cover),
+                    width: MediaQuery.of(context).size.height * 0.20,
+                  ), //Pegar imagem da noticia da API.
+                  Container(
+                    margin: EdgeInsets.only(left: 10),
+                    width: 200.0,
                     child: Column(
                       children: <Widget>[
-                        Text(snapshot.data['articles'][index]['title'], overflow: TextOverflow.fade,),// Pegar o titulo da notica da API.
-
+                        //Padding(padding: text),
+                        Text(
+                          snapshot.data['articles'][index]['title'],
+                          overflow: TextOverflow.fade,
+                          textAlign: TextAlign.justify,
+                        ), // Pegar o titulo da notica da API.
                         //Text(snapshot.data['articles'][index]['description'], overflow: TextOverflow.fade)// Pegar a descrição da noticia.
                       ],
                     ),
@@ -55,20 +65,34 @@ class _NewscreenState extends State<Newscreen> {
                 ],
               ),
             ),
-          );
+          ));
         });
   }
 
-
+  _verification(snapshot, index) {
+    if (snapshot.data['articles'][index]['urlToImage'] != null)
+      return snapshot.data['articles'][index]['urlToImage'];
+    else
+      return 'https://www.lumitecfoto.com.br/media/catalog/product/cache/1/image/800x/9df78eab33525d08d6e5fb8d27136e95/f/u/fundo-fotogr_fico-em-tecido-muslin-20x30m-preto-3.jpg';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(search),centerTitle: true ,), 
-      body: Container(
-        child: FutureBuilder(future: _getData(),builder: (context, snapshot) {switch(snapshot.connectionState){
-            case ConnectionState.waiting:
-            case ConnectionState.none: return Container(
+        appBar: AppBar(
+          title: Text('ola'),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+        ),
+        body: Container(
+          color: Colors.black,
+          child: FutureBuilder(
+              future: _getData(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                  case ConnectionState.none:
+                    return Container(
                       width: 200.0,
                       height: 200.0,
                       alignment: Alignment.center,
@@ -77,13 +101,14 @@ class _NewscreenState extends State<Newscreen> {
                         strokeWidth: 5.0,
                       ),
                     );
-            default: if (snapshot.hasError) {
-              return Container();
-            }else{
-              return _tela(context,snapshot);
-            }
-          }}),
-      )
-    );
+                  default:
+                    if (snapshot.hasError) {
+                      return Container();
+                    } else {
+                      return _tela(context, snapshot);
+                    }
+                }
+              }),
+        ));
   }
 }
