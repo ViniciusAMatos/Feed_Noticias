@@ -125,19 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (context) => Newscreen(
-                                        getCategory: 'sports',
-                                        geTitle: 'Esportes',
-                                    ),
-                                ),
-                            );
-                        },
-                        title: Text('Esportes'),
-                    ),
-                    ListTile(
-                        onTap: () {
-                            Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => Newscreen(
                                         getCategory: 'technology',
                                         geTitle: 'Tecnologia',
                                     ),
@@ -183,47 +170,92 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget myScreen(context, snapshot) {
         return StaggeredGridView.countBuilder(
             itemCount: snapshot.data["articles"].length,
-            staggeredTileBuilder: (index) => StaggeredTile.extent(1, 150),
+            staggeredTileBuilder: (index) => StaggeredTile.extent(1, 200),
             mainAxisSpacing: 0.0,
             crossAxisSpacing: 0.0,
             crossAxisCount: 1,
             itemBuilder: (BuildContext context, int index) =>  Link(
                 url: snapshot.data["articles"][index]["url"],
                 child: Card(
-                    color: Colors.deepOrange,
+                    child: Container(
+                        padding: EdgeInsets.all(4.5),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: <Color>[
+                                    Colors.deepOrange.shade900,
+                                    Colors.deepOrange.shade100,
+                                ], // colors
+                            ), // LinearGradient
+                        ), // BoxDecoration
+                        child: Stack(
+                            children: <Widget>[
+                                Container(
+                                    width: 500,
+                                    child: Image.network(
+                                        _verification(snapshot, index),
+                                        fit: BoxFit.fitWidth,
+                                    ), // Image child
+                                ), // Container
+                                Column(
+                                    children: <Widget>[
 
-                    child: Row(
-                        children: <Widget>[
-                            Container(
-                                child: Image.network(
-                                    _verification(snapshot, index),
-                                    fit: BoxFit.cover,
-                                ), // network()
-                                width: MediaQuery.of(context).size.width*0.35,
-                            ), // image
-                            Container(
-                                child: Flexible(
-                                    child: Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: Text(
-                                            snapshot.data['articles'][index]['title'],
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 5,
-                                            textAlign: TextAlign.justify,
-                                            style: TextStyle(
-                                                letterSpacing: 0.5,
-                                                wordSpacing: 0.5,
-                                            ), // TextStyle
-                                        ), // Text
-                                    ), // Padding
-                                ), // Flexible
-                            ), // title
-                        ], // children Widget
-                    ), // Row
+                                        Flexible(
+                                            child: Center(
+                                                child: Stack(
+                                                    children: <Widget>[
+                                                        Text(
+                                                            snapshot.data['articles'][index]['title'],
+                                                            overflow: TextOverflow.ellipsis,
+                                                            maxLines: 3,
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                letterSpacing: 0.5,
+                                                                wordSpacing: 0.5,
+                                                                fontFamily: 'Roboto',
+                                                                // fontWeight: FontWeight.bold,
+                                                                fontSize: 22,
+                                                                foreground: Paint()
+                                                                    ..style = PaintingStyle.stroke
+                                                                    ..strokeWidth = 6
+                                                                    ..color = Colors.black,
+                                                            ), // TextStyle
+                                                        ), // Text
+                                                        Text(
+                                                            snapshot.data['articles'][index]['title'],
+                                                            overflow: TextOverflow.ellipsis,
+                                                            maxLines: 3,
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                letterSpacing: 0.5,
+                                                                wordSpacing: 0.5,
+                                                                fontFamily: 'Roboto',
+                                                                // fontWeight: FontWeight.bold,
+                                                                fontSize: 26,
+                                                                color: Colors.white,
+                                                            ), // TextStyle
+                                                        ), // Text
+                                                    ],
+                                                ), // Stack
+
+
+
+                                            ), // Center
+                                        ), // Flexible
+
+                                    ], // Column children
+                                ), // Column
+
+                            ], // Stack children
+                        ), // Stack
+
+                    ), // Container child
+
                 ), // Card
             ), // Link
         ); // return
-  } // myTile
+  } // myScreen
 
   _verification(snapshot, index) {
         if (snapshot.data['articles'][index]['urlToImage'] != null)
