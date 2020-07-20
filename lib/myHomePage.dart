@@ -227,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                 wordSpacing: 0.5,
                                                                 fontFamily: 'Roboto',
                                                                 // fontWeight: FontWeight.bold,
-                                                                fontSize: 22,
+                                                                fontSize: 26,
                                                                 foreground: Paint()
                                                                     ..style = PaintingStyle.stroke
                                                                     ..strokeWidth = 6
