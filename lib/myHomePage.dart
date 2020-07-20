@@ -67,6 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                         },
                         title: Text('Negócios'),
+                        trailing: Icon(Icons.arrow_forward),
+                        leading: Icon(Icons.assessment),
                     ),
                     ListTile(
                         onTap: () {
@@ -80,6 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                         },
                         title: Text('Entretenimento'),
+                        trailing: Icon(Icons.arrow_forward),
+                        leading: Icon(Icons.theaters),
                     ),
                     ListTile(
                         onTap: () {
@@ -93,6 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                         },
                         title: Text('Esportes'),
+                        trailing: Icon(Icons.arrow_forward),
+                        leading: Icon(Icons.accessibility_new),
                     ),
                     ListTile(
                         onTap: () {
@@ -106,6 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                         },
                         title: Text('Saúde'),
+                        trailing: Icon(Icons.arrow_forward),
+                        leading: Icon(Icons.add_to_queue),
                     ),
                     ListTile(
                         onTap: () {
@@ -119,6 +127,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                         },
                         title: Text('Ciência'),
+                        trailing: Icon(Icons.arrow_forward),
+                        leading: Icon(Icons.account_balance),
                     ),
                     ListTile(
                         onTap: () {
@@ -132,6 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                         },
                         title: Text('Tecnologia'),
+                        trailing: Icon(Icons.arrow_forward),
+                        leading: Icon(Icons.cloud_upload),
                     ),
                 ],
             ), // child ListView
