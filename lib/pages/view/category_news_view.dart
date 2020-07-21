@@ -4,18 +4,18 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:link/link.dart';
 
-class Newscreen extends StatefulWidget {
+class CategoryNewView extends StatefulWidget {
 //Criando variáveis e construtores para pegarmos o título da tela e também a categoria selecionada.
   final String geTitle;
   final String getCategory;
 
-  Newscreen({this.geTitle, this.getCategory});
+  CategoryNewView({this.geTitle, this.getCategory});
 
   @override
-  _NewscreenState createState() => _NewscreenState();
+  _CategoryNewViewState createState() => _CategoryNewViewState();
 }
 
-class _NewscreenState extends State<Newscreen> {
+class _CategoryNewViewState extends State<CategoryNewView> {
   @override
   void initState() {
     super.initState();
@@ -36,48 +36,46 @@ class _NewscreenState extends State<Newscreen> {
         itemCount:
             snapshot.data['articles'].length, //Pegar o tamanho da aba artigos.
         itemBuilder: (context, index) {
-          return Link(
-              url: snapshot.data['articles'][index]['url'],
-              onError: _showErrorSnackBar, //Era pra funcionar, mas...
-              child: Card(
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: Link(
+                url: snapshot.data['articles'][index]['url'],
+                onError: _showErrorSnackBar,
                 child: Container(
-                  height: 100.0,
-                  width: 400.0,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        child: Image.network(_verification(snapshot, index),
-                            fit: BoxFit.cover),
-                        width: MediaQuery.of(context).size.width * 0.42,
-                      ), //Pegar imagem da noticia da API.
-                      Container(
-                        margin: EdgeInsets.only(left: 10),
-                        width: 200.0,
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: 5,
+                  width: MediaQuery.of(context).size.width,
+                  height: 120,
+                  child: Card(
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          child: Image.network(
+                            _verification(snapshot, index),
+                            fit: BoxFit.cover,
+                            height: 110,
+                          ),
+                          width: MediaQuery.of(context).size.width * 0.40,
+                        ), //Pegar imagem da noticia da API.
+                        Flexible(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 10, right: 2),
+                            alignment: Alignment.center,
+                            child: Text(
+                              snapshot.data['articles'][index]['title'],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 5,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                letterSpacing: 0.5,
+                                wordSpacing: 0.5,
                               ),
-                              child: Text(
-                                snapshot.data['articles'][index]['title'],
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 5,
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                  letterSpacing: 0.5,
-                                  wordSpacing: 0.5,
-                                ),
-                              ), // Pegar o titulo da notica da API.
-                              //Text(snapshot.data['articles'][index]['description'], overflow: TextOverflow.fade)// Pegar a descrição da noticia.
-                            )
-                          ],
-                        ),
-                      )
-                    ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ));
+                )),
+          );
         });
   }
 

@@ -1,10 +1,10 @@
-import 'package:feed_noticias/login/model/user_model.dart';
-import 'package:feed_noticias/login/view/cadastro_view.dart';
+import 'package:feed_noticias/pages/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
-import '../../myHomePage.dart';
+import 'cadastro_view.dart';
+import 'headlines_news_view.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Não tem uma conta?',
+                        'Não tem uma conta?  ',
                         style: TextStyle(
                             fontSize: 15.0, fontStyle: FontStyle.italic),
                       ),
@@ -155,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => CreateAccount()));
                         },
+                        padding: EdgeInsets.zero,
                         child: Text(
                           "Crie uma conta",
                           style: TextStyle(
@@ -174,8 +175,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onSuccess() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => MyHomePage()));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HeadlinesNewsView()));
   }
 
   void _onFail() {

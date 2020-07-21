@@ -1,4 +1,4 @@
-import 'package:feed_noticias/login/model/user_model.dart';
+import 'package:feed_noticias/pages/model/user_model.dart';
 
 import 'package:flutter/material.dart';
 
